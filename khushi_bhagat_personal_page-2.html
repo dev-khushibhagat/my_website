@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f4ef">
+<meta name="description" content="Khushi Bhagat — product builder exploring the space between user problems, business needs, and thoughtful software.">
+<title>Khushi Bhagat — Product Builder</title>
+<style>
+  :root {
+    --paper: #f5f4ef;
+    --paper-deep: #ecebe3;
+    --ink: #20241f;
+    --muted: #666b61;
+    --line: #d8d9cf;
+    --green: #3f654d;
+    --green-soft: #e1e9df;
+    --white: #fffefa;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --max: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+  .wrap { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+  .eyebrow { color: var(--green); text-transform: uppercase; letter-spacing: .16em; font-size: .69rem; font-weight: 700; }
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(245,244,239,.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(216,217,207,.8); }
+  .nav-inner { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { font-family: var(--serif); font-size: 1.15rem; letter-spacing: -.03em; white-space: nowrap; }
+  .brand span { color: var(--green); }
+  .nav-links { display: flex; gap: clamp(16px, 3vw, 34px); align-items: center; font-size: .8rem; color: var(--muted); }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta { border: 1px solid var(--line); padding: 9px 14px; border-radius: 999px; color: var(--ink) !important; }
+  .hero { padding: clamp(76px, 12vw, 142px) 0 76px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(230px, .7fr); gap: clamp(40px, 8vw, 112px); align-items: end; }
+  h1 { font-size: clamp(3.5rem, 8.4vw, 7.4rem); line-height: .94; letter-spacing: -.075em; font-weight: 500; margin: 22px 0 28px; max-width: 780px; }
+  h1 em { font-family: var(--serif); font-weight: 400; color: var(--green); }
+  .hero-lede { max-width: 650px; font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.65; color: #454a42; margin: 0; }
+  .hero-aside { border-left: 1px solid var(--line); padding: 8px 0 8px 24px; }
+  .hero-aside p { color: var(--muted); font-size: .91rem; margin: 8px 0 22px; }
+  .text-link { display: inline-flex; gap: 9px; align-items: center; color: var(--green); font-weight: 650; font-size: .86rem; }
+  .text-link span { transition: transform .2s ease; }
+  .text-link:hover span { transform: translate(3px,-2px); }
+  .hero-bottom { margin-top: 70px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: .76rem; text-transform: uppercase; letter-spacing: .1em; }
+  .section { padding: 92px 0; border-top: 1px solid var(--line); }
+  .section-head { display: grid; grid-template-columns: 210px 1fr; gap: 30px; margin-bottom: 48px; }
+  .section-number { color: var(--muted); font-size: .77rem; letter-spacing: .1em; }
+  h2 { font-size: clamp(2.1rem, 4.6vw, 4rem); font-weight: 500; line-height: 1.06; letter-spacing: -.06em; margin: 0; max-width: 760px; }
+  h2 em { font-family: var(--serif); font-weight: 400; }
+  .section-intro { color: var(--muted); max-width: 640px; margin: 18px 0 0; font-size: 1rem; }
+  .feature { background: var(--green-soft); border-radius: 4px; padding: clamp(26px, 5vw, 54px); display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(30px, 7vw, 88px); }
+  .feature-label { display: flex; align-items: center; gap: 10px; color: var(--green); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+  .feature h3 { font-size: clamp(2.5rem, 5vw, 4.6rem); letter-spacing: -.07em; line-height: .95; font-weight: 500; margin: 22px 0; }
+  .feature h3 em { font-family: var(--serif); font-weight: 400; }
+  .feature-lede { font-size: 1.02rem; max-width: 470px; color: #444d43; }
+  .feature-side { display: flex; flex-direction: column; justify-content: space-between; gap: 30px; }
+  .feature-side p { margin: 0; color: #444d43; }
+  .feature-side blockquote { font-family: var(--serif); font-size: clamp(1.35rem, 2.5vw, 2rem); line-height: 1.3; margin: 0; padding-top: 24px; border-top: 1px solid rgba(63,101,77,.3); }
+  .feature-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .tag { border: 1px solid rgba(63,101,77,.25); color: #365540; padding: 6px 10px; border-radius: 99px; font-size: .72rem; }
+  .project-note { display: grid; grid-template-columns: 210px 1fr; gap: 30px; padding: 30px 0 0; margin-top: 30px; }
+  .project-note .note-label { font-size: .76rem; color: var(--muted); }
+  .project-note p { max-width: 720px; margin: 0; font-size: 1.03rem; }
+  .project-note strong { color: var(--green); font-weight: 650; }
+  .work-list { border-top: 1px solid var(--line); }
+  .work-item { display: grid; grid-template-columns: 210px minmax(0,1fr) 150px; gap: 28px; padding: 30px 0; border-bottom: 1px solid var(--line); }
+  .work-date { color: var(--muted); font-size: .78rem; padding-top: 5px; }
+  .work-title { margin: 0 0 6px; font-size: 1.35rem; letter-spacing: -.035em; font-weight: 600; }
+  .work-org { color: var(--green); font-size: .82rem; margin-bottom: 14px; }
+  .work-desc { margin: 0; color: #565b52; max-width: 680px; font-size: .92rem; }
+  .work-side { color: var(--muted); font-size: .76rem; text-align: right; }
+  .work-points { margin: 15px 0 0; padding-left: 17px; color: #565b52; font-size: .88rem; }
+  .work-points li { padding: 3px 0; }
+  .principles { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .principle { padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 220px; }
+  .principle-index { color: var(--green); font-family: var(--serif); font-size: 1.5rem; }
+  .principle h3 { font-size: 1.12rem; letter-spacing: -.025em; margin: 24px 0 9px; font-weight: 600; }
+  .principle p { color: var(--muted); font-size: .87rem; margin: 0; }
+  .education-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; }
+  .education-main { padding: 26px 0; border-top: 1px solid var(--line); }
+  .education-main h3 { font-size: 1.2rem; margin: 0 0 5px; letter-spacing: -.03em; }
+  .education-main p { margin: 0; color: var(--muted); font-size: .88rem; }
+  .certs { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 9px; }
+  .certs span { padding: 8px 12px; background: var(--white); border: 1px solid var(--line); border-radius: 3px; color: #565b52; font-size: .78rem; }
+  .contact { padding: 94px 0 38px; background: var(--ink); color: var(--paper); }
+  .contact .eyebrow { color: #b7cbb9; }
+  .contact-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 50px; align-items: end; }
+  .contact h2 { font-size: clamp(3rem, 7vw, 6.4rem); margin: 20px 0 24px; }
+  .contact h2 em { color: #b7cbb9; }
+  .contact-copy { color: #c1c5bc; max-width: 480px; margin: 0; }
+  .contact-links { border-top: 1px solid #454a43; }
+  .contact-links a { display: flex; justify-content: space-between; gap: 15px; padding: 16px 0; border-bottom: 1px solid #454a43; font-size: .9rem; }
+  .contact-links a span:last-child { color: #b7cbb9; }
+  .footer { display: flex; justify-content: space-between; gap: 20px; margin-top: 80px; padding-top: 18px; border-top: 1px solid #454a43; color: #a4aaa0; font-size: .73rem; }
+  .back-top { color: #b7cbb9; }
+  @media (max-width: 760px) {
+    .wrap { width: min(100% - 36px, var(--max)); }
+    .nav-inner { min-height: 62px; }
+    .nav-links { gap: 13px; font-size: .74rem; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { padding-top: 80px; }
+    .hero-grid, .section-head, .feature, .project-note, .contact-grid { grid-template-columns: 1fr; }
+    .hero-aside { max-width: 430px; }
+    .hero-bottom { margin-top: 48px; flex-wrap: wrap; }
+    .section { padding: 68px 0; }
+    .section-head { gap: 15px; margin-bottom: 32px; }
+    .work-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+    .work-side { text-align: left; }
+    .principles { grid-template-columns: 1fr; }
+    .principle { min-height: auto; }
+    .education-grid { grid-template-columns: 1fr; gap: 0; }
+    .contact { padding-top: 70px; }
+    .footer { margin-top: 55px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Khushi Bhagat home">khushi<span>.</span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+      <a class="nav-cta" href="#contact">Get in touch ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Product builder · Mumbai, India</div>
+        <h1>Curious about<br>what we <em>should</em><br>build next.</h1>
+        <p class="hero-lede">I’m Khushi — a product builder who tests ideas before building them, and is willing to change direction when the evidence says so. I bring product discovery experience, a year of hands-on SAP development, and a bias toward making complex workflows clearer.</p>
+      </div>
+      <aside class="hero-aside">
+        <div class="eyebrow">A little about my work</div>
+        <p>From enterprise software and B2B HRMS to founding a food-ordering MVP, I’ve learned that building the product is only part of the work. Understanding what makes it useful — and adoptable — matters just as much.</p>
+        <a class="text-link" href="#work">Explore selected work <span>↗</span></a>
+      </aside>
+    </div>
+    <div class="hero-bottom">
+      <span>Problem first, product second</span>
+      <span>Discovery · Workflows · 0 → 1</span>
+      <span>Scroll to explore ↓</span>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-number">01 / Selected work</div>
+        <div>
+          <h2>Building is a beginning.<br><em>Learning is the work.</em></h2>
+          <p class="section-intro">The projects that have shaped how I think about product decisions — from taking an idea to launch, to making complex business workflows clearer.</p>
+        </div>
+      </div>
+
+      <article class="feature">
+        <div>
+          <div class="feature-label"><span class="dot"></span> Founder project · 2025–2026</div>
+          <h3>Bhookh<span style="color:var(--green)">.</span><br><em>From idea to launch.</em></h3>
+          <p class="feature-lede">A mobile food-ordering MVP designed around the everyday friction of campus canteens — menu discovery, ordering, payments, and order tracking in one place.</p>
+          <div class="feature-meta">
+            <span class="tag">Product discovery</span><span class="tag">Figma · 30+ screens</span><span class="tag">Android + iOS</span>
+          </div>
+        </div>
+        <div class="feature-side">
+          <p>I spoke with students and canteen operators, defined the MVP, designed customer and vendor journeys in Figma, and worked with developers through testing, bug resolution, and launch on Android and iOS. The live pilot gave me a chance to observe behaviour beyond the prototype.</p>
+          <blockquote>“A product can work for its users and still struggle to work for its operators.”</blockquote>
+          <p>In a one-week pilot, 14 of 15 registered users placed at least one order, with a 29% repeat-order rate. I also identified and resolved a cart-sync bug that caused stock mismatches at checkout.</p>
+        </div>
+      </article>
+      <div class="project-note">
+        <div class="note-label">The hard part after launch</div>
+        <p>Post-pilot vendor interviews surfaced workflow disruption, reliability concerns, and no clear incremental upside as barriers to adoption. It changed how I think about marketplace products: <strong>user value and operator value have to meet in the same workflow.</strong></p>
+      </div>
+
+      <article class="project-note" style="border-top:1px solid var(--line); padding-top:30px">
+        <div class="note-label">Also selected · Apr 2026</div>
+        <div>
+          <div class="eyebrow" style="margin-bottom:10px">Product case study · Faclon Labs</div>
+          <h3 style="font-size:1.55rem;letter-spacing:-.04em;font-weight:550;margin:0 0 10px">Workforce Utilization Dashboard</h3>
+          <p>Designed and shipped an interactive dashboard using one deliberately simple metric — <strong>workload ÷ capacity</strong> — grouped into Idle, Underutilized, Balanced, and Overutilized bands. I used imbalanced mock data to test whether the interface surfaced meaningful problems, documented what I chose not to build, and outlined a roadmap for a real version.</p>
+          <div class="feature-meta" style="margin-top:16px">
+            <span class="tag">Metric design</span><span class="tag">Prioritization</span><span class="tag">Interactive prototype</span>
+          </div>
+          <a class="text-link" style="margin-top:20px" href="https://workload-dashboard-omega.vercel.app/" target="_blank" rel="noopener noreferrer">View dashboard <span>↗</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-number">02 / Experience</div>
+        <div>
+          <h2>Different contexts.<br><em>One consistent question:</em></h2>
+          <p class="section-intro">What does the user need to do, what does the business need to achieve, and what should the software make possible?</p>
+        </div>
+      </div>
+      <div class="work-list">
+        <article class="work-item">
+          <div class="work-date">Aug 2025 — Present</div>
+          <div>
+            <h3 class="work-title">Software Engineer</h3>
+            <div class="work-org">Capgemini · Enterprise software</div>
+            <p class="work-desc">Built a technical foundation in SAP UI5 and Fiori, with hands-on work across enterprise UI patterns, data integration, and application documentation.</p>
+            <ul class="work-points">
+              <li>Completed practical development training across 8 applications covering UI5 fundamentals, OData/CDS integration, and Fiori Elements.</li>
+              <li>Developed a CRUD application using the Northwind OData service, including BTP destination setup, filtering, search help, and technical documentation.</li>
+              <li>Built Fiori Elements applications using Smart Table, Smart Filter Bar, and dynamic page patterns.</li>
+            </ul>
+          </div>
+          <div class="work-side">Enterprise systems<br>UI · Data workflows</div>
+        </article>
+        <article class="work-item">
+          <div class="work-date">May 2025 — Mar 2026</div>
+          <div>
+            <h3 class="work-title">Founder · Bhookh</h3>
+            <div class="work-org">Campus food-ordering app · Part-time</div>
+            <p class="work-desc">Took a campus food-ordering idea from customer discovery through MVP definition, design, development coordination, and a live restaurant pilot.</p>
+            <ul class="work-points">
+              <li>Defined ordering, payments, authentication, and real-time order management requirements.</li>
+              <li>Designed customer and vendor experiences in Figma, including MVP and Phase 2 journeys, prototypes, and edge cases; secured University Vice Chancellor approval.</li>
+              <li>In a one-week live pilot, 14 of 15 registered users placed at least one order, with a 29% repeat-order rate.</li>
+              <li>Identified and fixed a cart-sync bug causing stock mismatches, then interviewed vendors to understand adoption barriers.</li>
+            </ul>
+          </div>
+          <div class="work-side">0 → 1 product<br>Discovery · Launch</div>
+        </article>
+        <article class="work-item">
+          <div class="work-date">Jun — Aug 2024</div>
+          <div>
+            <h3 class="work-title">Product Management Intern</h3>
+            <div class="work-org">Innovizia Technologies · B2B SaaS HRMS</div>
+            <p class="work-desc">Translated client discovery into detailed workflows, functional requirements, and implementation documentation for the Exit Management module.</p>
+            <ul class="work-points">
+              <li>Mapped dependencies across payroll, recruitment, asset management, knowledge transfer, and employee records.</li>
+              <li>Prioritized requirements using business impact, implementation complexity, and operational feasibility.</li>
+              <li>Proposed an additional resignation confirmation step to reduce accidental submissions and improve process reliability.</li>
+              <li>Iterated on documentation with clients to align stakeholders before design.</li>
+            </ul>
+          </div>
+          <div class="work-side">B2B SaaS<br>Discovery · Requirements</div>
+        </article>
+        <article class="work-item">
+          <div class="work-date">Jun — Aug 2023</div>
+          <div>
+            <h3 class="work-title">Product Design Intern</h3>
+            <div class="work-org">Innovizia Technologies · Vehicle auction platform</div>
+            <p class="work-desc">Connected client goals, competitive research, and user workflows to product design recommendations for a multi-module vehicle auction platform.</p>
+            <ul class="work-points">
+              <li>Benchmarked competing platforms and identified UX gaps.</li>
+              <li>Designed the discovery feed, vehicle details page, and desktop bidding interface in Figma.</li>
+              <li>Proposed multi-user bidding access for auction houses based on client feedback and documented complex workflows for internal teams.</li>
+            </ul>
+          </div>
+          <div class="work-side">Marketplace<br>Product design · UX</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="approach">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-number">03 / How I think</div>
+        <div>
+          <h2>Thoughtful products begin<br>with <em>better questions.</em></h2>
+          <p class="section-intro">I’m drawn to product work because it asks you to look beyond the feature request and understand the behaviour, context, and constraints behind it.</p>
+        </div>
+      </div>
+      <div class="principles">
+        <article class="principle">
+          <div class="principle-index">01</div>
+          <h3>Understand before solving</h3>
+          <p>Talk to the people experiencing the problem. Look for the friction beneath the first explanation, not just the feature they ask for.</p>
+        </article>
+        <article class="principle">
+          <div class="principle-index">02</div>
+          <h3>Make the problem tangible</h3>
+          <p>Turn conversations into user flows, requirements, and a clear first version that teams can discuss, challenge, and build.</p>
+        </article>
+        <article class="principle">
+          <div class="principle-index">03</div>
+          <h3>Learn from what happens</h3>
+          <p>A launch is not proof of value. Watch how people respond, identify where adoption breaks down, and let evidence shape the next decision.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-number">04 / Background</div>
+        <div>
+          <h2>Technical grounding.<br><em>Product curiosity.</em></h2>
+          <p class="section-intro">My computer science background helps me work with technical teams; my experience across design, research, and product projects keeps me interested in why we build something in the first place.</p>
+        </div>
+      </div>
+      <div class="education-grid">
+        <div>
+          <div class="eyebrow">Education</div>
+          <div class="education-main">
+            <h3>B.Tech, Computer Science Engineering</h3>
+            <p>Amity University Mumbai · Sep 2021 — Jun 2025</p>
+            <p style="margin-top:6px">Minor in Business Management · CGPA 9.1/10</p>
+          </div>
+          <div class="education-main">
+            <h3>Cambridge AS & A Levels</h3>
+            <p>Prakriya International School · Aug 2019 — May 2021</p>
+          </div>
+          <div class="education-main">
+            <h3>CBSE SSC</h3>
+            <p>Reeds World School · Jun 2013 — May 2019</p>
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">Courses & certifications</div>
+          <p class="section-intro" style="margin-top:14px">A mix of product, design, and technical foundations.</p>
+          <div class="certs">
+            <span>SAP Certified · Backend Developer (CAP)</span>
+            <span>SAP Certified · Business Transformation Consultant</span>
+            <span>SAP Certified · WalkMe Digital Adoption Consultant</span>
+          </div>
+          <div style="margin-top:36px">
+            <div class="eyebrow">Areas of interest</div>
+            <div class="certs">
+              <span>Product discovery</span><span>Customer & stakeholder interviews</span><span>PRDs & requirements</span><span>Prioritization</span><span>Roadmapping</span><span>User flows</span><span>MVP definition</span><span>SQL</span><span>KPI definition</span><span>Excel</span><span>Figma</span><span>Notion</span><span>Python</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <div class="eyebrow">05 / Contact</div>
+          <h2>Let’s make<br>something <em>matter.</em></h2>
+          <p class="contact-copy">I’m interested in thoughtful product teams, early-stage problems, and conversations about building things people genuinely need.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:work.khushibhagat@gmail.com"><span>Email</span><span>↗</span></a>
+          <a href="https://www.linkedin.com/in/khushi-bhagat-/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span>↗</span></a>
+          <a href="https://github.com/dev-khushibhagat" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span>↗</span></a>
+          <a href="https://elegant-process-325.notion.site/Khushi-Bhagat-Product-Portfolio-31f90b91179b809abd4cdb815f30236e" target="_blank" rel="noopener noreferrer"><span>Portfolio notes</span><span>↗</span></a>
+          <a href="tel:+918072472628"><span>Phone</span><span>↗</span></a>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>Khushi Bhagat · Mumbai, India</span>
+        <span>Made with intention, not excess.</span>
+        <a class="back-top" href="#top">Back to top ↑</a>
+      </footer>
+    </div>
+  </section>
+</main>
+</body>
+</html>
